@@ -35,10 +35,6 @@
         <button class="btn btn-accent btn-full" :disabled="loading" @click="submit">
           {{ loading ? 'Entrando…' : 'Entrar na plataforma' }}
         </button>
-
-        <!-- <p class="hint">
-          Demo: <strong>admin@edu.br</strong> / <strong>1234</strong>
-        </p> -->
       </div>
     </div>
   </div>
@@ -52,16 +48,10 @@ import { useAuthStore } from '@/stores/auth'
 const router = useRouter()
 const auth   = useAuthStore()
 
-// const selectedRole = ref('admin')
 const loading      = ref(false)
 const error        = ref('')
 const form = reactive({ email: '', senha: '' })
 
-// const roles = [
-//   { value: 'admin',   label: 'Administrador' },
-//   { value: 'teacher', label: 'Professor'      },
-//   { value: 'student', label: 'Aluno'          },
-// ]
 
 async function submit() {
   error.value = ''
@@ -87,9 +77,6 @@ async function submit() {
 
 .decorative-grid {
   position: absolute; inset: 0;
-  /* background-image:
-    linear-gradient(rgba(48,54,61,.45) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(48,54,61,.45) 1px, transparent 1px); */
   background-size: 40px 40px;
   mask-image: radial-gradient(ellipse 80% 80% at 30% 40%, black 30%, transparent 80%);
   pointer-events: none;
