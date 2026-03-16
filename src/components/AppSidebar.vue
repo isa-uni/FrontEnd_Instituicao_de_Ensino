@@ -47,11 +47,14 @@ const auth   = useAuthStore()
 const router = useRouter()
 
 const mainNav = [
-  { to: '/home', icon: '⊞', label: 'Home'   },
+  { to: '/home', icon: '⊞', label: 'Home' },
+  { to: '/usuarios', icon: '👥', label: 'Usuários' },
+  { to: '/turmas', icon: '📚', label: 'Turmas' },
 ]
 
 const adminNav = [
   { to: '/cadastrar', icon: '👤', label: 'Cadastrar Pessoas' },
+  { to: '/turmas/cadastrar', icon: '📚', label: 'Cadastrar Turma' },
 ]
 
 const papelLabel = { admin: 'Administrador', professor: 'Professor', aluno: 'Aluno' }

@@ -57,10 +57,10 @@
               </select>
             </div>
 
-            <div v-if="form.papel === 'aluno'" class="field col-span-2">
+            <!-- <div v-if="form.papel === 'aluno'" class="field col-span-2">
               <label for="turma">Turma</label>
               <input id="turma" v-model="form.turma" type="text" placeholder="Ex.: 3A, 2B" />
-            </div>
+            </div> -->
           </div>
 
           <button

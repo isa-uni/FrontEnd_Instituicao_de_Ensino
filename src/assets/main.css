@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* @import './base.css'; */
 /* 
 #app {
@@ -33,9 +35,6 @@ a,
     padding: 0 2rem;
   }
 } */
-
-/* ─── Reset ──────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* ─── Design Tokens ──────────────────────────────── */
 :root {

@@ -9,6 +9,17 @@ export const usePeopleStore = defineStore('people', {
 
   actions: {
 
+    async fetchAll() {
+      const response = await api.get('/usuarios')
+      this.people = response.data ?? []
+      return this.people
+    },
+
+    async remove(id) {
+      await api.delete(`usuarios/deletar/${id}`)
+      this.people = this.people.filter(p => p.id !== id)
+    },
+
     async add(data) {
 
       const payload = {
@@ -32,9 +43,9 @@ export const usePeopleStore = defineStore('people', {
 
     mapPapel(papel) {
       const map = {
-        aluno: 1,
+        aluno: 3,
         professor: 2,
-        admin: 3
+        admin: 1
       }
 
       return map[papel]
