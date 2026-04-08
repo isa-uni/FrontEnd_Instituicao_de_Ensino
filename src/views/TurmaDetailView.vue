@@ -17,7 +17,6 @@
         </div>
 
         <template v-if="!error">
-          <!-- Adicionar usuário (professor ou admin) -->
           <div v-if="canManageTurma" class="card card-body add-user-section">
             <h2 class="section-title">Adicionar usuário à turma</h2>
             <p class="section-sub">Selecione um usuário para associar a esta turma.</p>
@@ -98,6 +97,15 @@
                 </template>
                 <span v-else class="nota-value">{{ formatNota(item.nota) }}</span>
               </div>
+              <button
+                v-if="canManageTurma"
+                type="button"
+                class="btn btn-sm btn-danger"
+                :disabled="removendoId === item.id"
+                @click="removerUsuario(item)"
+              >
+                {{ removendoId === item.id ? 'Removendo...' : 'Remover' }}
+              </button>
             </div>
           </div>
         </template>
@@ -128,6 +136,7 @@ const addError = ref(null)
 const peopleLoading = ref(false)
 const notaInputs = ref({})
 const notaSavingId = ref(null)
+const removendoId = ref(null)
 
 const turmaId = computed(() => Number(route.params.id))
 
@@ -219,6 +228,19 @@ async function associarUsuario() {
     addError.value = e.response?.data?.message ?? 'Erro ao associar usuário à turma.'
   } finally {
     addLoading.value = false
+  }
+}
+
+async function removerUsuario(item) {
+  if (!confirm(`Remover ${item.usuarioNome} da turma?`)) return
+  removendoId.value = item.id
+  try {
+    await turmasStore.removerUsuarioDaTurma(item.id)
+    usuarios.value = usuarios.value.filter(u => u.id !== item.id)
+  } catch (e) {
+    error.value = e.response?.data?.message ?? 'Erro ao remover usuário da turma.'
+  } finally {
+    removendoId.value = null
   }
 }
 
@@ -362,6 +384,18 @@ watch(turmaId, load)
   color: var(--muted);
   margin-top: 8px;
 }
+
+.btn-danger {
+  background: transparent;
+  color: #e05252;
+  border: 1px solid #e05252;
+  flex-shrink: 0;
+}
+.btn-danger:hover:not(:disabled) {
+  background: #e05252;
+  color: #fff;
+}
+.btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .empty-state {
   text-align: center;

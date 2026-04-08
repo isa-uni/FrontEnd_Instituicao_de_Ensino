@@ -24,18 +24,29 @@
         </div>
 
         <div v-else class="card overflow-hidden">
-          <RouterLink
+          <div
             v-for="turma in turmasStore.turmas"
             :key="turma.id"
-            :to="{ name: 'turma-detail', params: { id: turma.id } }"
-            class="turma-item turma-item-link"
+            class="turma-item"
           >
-            <div class="turma-info">
+            <RouterLink
+              :to="{ name: 'turma-detail', params: { id: turma.id } }"
+              class="turma-item-link turma-info"
+            >
               <p class="turma-nome">{{ turma.nome }}</p>
               <p v-if="turma.descricao" class="turma-descricao">{{ turma.descricao }}</p>
-            </div>
-            <span class="turma-arrow">→</span>
-          </RouterLink>
+            </RouterLink>
+            <button
+              v-if="auth.isAdmin"
+              type="button"
+              class="btn btn-sm btn-danger"
+              :disabled="deletandoId === turma.id"
+              @click.prevent="deletarTurma(turma)"
+            >
+              {{ deletandoId === turma.id ? 'Deletando...' : 'Deletar' }}
+            </button>
+            <span v-else class="turma-arrow">→</span>
+          </div>
         </div>
       </template>
     </div>
@@ -53,6 +64,19 @@ const auth = useAuthStore()
 const turmasStore = useTurmasStore()
 const loading = ref(true)
 const error = ref(null)
+const deletandoId = ref(null)
+
+async function deletarTurma(turma) {
+  if (!confirm(`Deletar a turma "${turma.nome}"?`)) return
+  deletandoId.value = turma.id
+  try {
+    await turmasStore.deletar(turma.id)
+  } catch (e) {
+    error.value = e.response?.data?.message ?? 'Erro ao deletar turma.'
+  } finally {
+    deletandoId.value = null
+  }
+}
 
 onMounted(async () => {
   try {
@@ -115,6 +139,18 @@ onMounted(async () => {
   margin-top: 4px;
   line-height: 1.4;
 }
+
+.btn-danger {
+  background: transparent;
+  color: #e05252;
+  border: 1px solid #e05252;
+  flex-shrink: 0;
+}
+.btn-danger:hover:not(:disabled) {
+  background: #e05252;
+  color: #fff;
+}
+.btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .empty-state {
   text-align: center;

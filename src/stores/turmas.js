@@ -38,6 +38,15 @@ export const useTurmasStore = defineStore('turmas', {
     async atualizarNota(usuarioTurmaId, nota) {
       const response = await api.patch(`/usuario-turma/${usuarioTurmaId}/nota`, { nota })
       return response.data
+    },
+
+    async removerUsuarioDaTurma(usuarioTurmaId) {
+      await api.delete(`/usuario-turma/${usuarioTurmaId}`)
+    },
+
+    async deletar(turmaId) {
+      await api.delete(`/turmas/${turmaId}`)
+      this.turmas = this.turmas.filter(t => t.id !== turmaId)
     }
   }
 })
