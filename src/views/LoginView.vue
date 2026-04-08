@@ -60,7 +60,7 @@ async function submit() {
   await new Promise(r => setTimeout(r, 600))
   const result = await auth.login(form.email, form.senha)
   if (result.ok) {
-    router.push('/home')
+    router.push('/turmas')
   } else {
     error.value = result.message
   }

@@ -47,7 +47,6 @@ const auth   = useAuthStore()
 const router = useRouter()
 
 const mainNav = [
-  { to: '/home', icon: '⊞', label: 'Home' },
   { to: '/usuarios', icon: '👥', label: 'Usuários' },
   { to: '/turmas', icon: '📚', label: 'Turmas' },
 ]

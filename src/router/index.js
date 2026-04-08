@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 import LoginView      from '@/views/LoginView.vue'
-import HomeView      from '@/views/HomeView.vue'
 import RegisterView  from '@/views/RegisterView.vue'
 import UsersView     from '@/views/UsersView.vue'
 import TurmasView       from '@/views/TurmasView.vue'
@@ -19,12 +18,6 @@ const routes = [
     name: 'login',
     component: LoginView,
     meta: { guest: true }
-  },
-  {
-    path: '/home',
-    name: 'home',
-    component: HomeView,
-    meta: { requiresAuth: true }
   },
   {
     path: '/usuarios',
@@ -71,10 +64,10 @@ router.beforeEach((to) => {
     return { name: 'login' }
   }
   if (to.meta.guest && auth.isLoggedIn) {
-    return { name: 'home' }
+    return { name: 'turmas' }
   }
   if (to.meta.requiresAdmin && !auth.isAdmin) {
-    return { name: 'home' }
+    return { name: 'turmas' }
   }
 })
 
